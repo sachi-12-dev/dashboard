@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EWSC Dashboard | Elite Web Services</title>
 
   <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="dashboard.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <!-- Chart.js Library -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -21,27 +21,27 @@
   <!-- Collapsible Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <img src="assets/logo.png" alt="Elite Web Services Logo" class="sidebar-logo">
+      <img src="assets/logo.png" alt="Elite Web Services Logo" class="sidebar-logo" />
       <h1 class="sidebar-title">EWSC</h1>
       <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar">
         <i class="fas fa-bars"></i>
       </button>
     </div>
     <ul class="sidebar-nav">
-      <li><a href="#overview" class="active">Overview</a></li>
-      <li><a href="#scorecard">Scorecard</a></li>
-      <li><a href="#spend">AWS Spend</a></li>
-      <li><a href="#ec2">EC2 Insights</a></li>
-      <li><a href="#security">Security</a></li>
-      <li><a href="#recommendations">Recommendations</a></li>
-      <li><a href="#alerts">Alerts</a></li>
+      <li><a href="#overview" class="active"><i class="fas fa-chart-pie"></i><span>Overview</span></a></li>
+      <li><a href="#scorecard"><i class="fas fa-tachometer-alt"></i><span>Scorecard</span></a></li>
+      <li><a href="#spend"><i class="fas fa-dollar-sign"></i><span>AWS Spend</span></a></li>
+      <li><a href="#ec2"><i class="fas fa-server"></i><span>EC2 Insights</span></a></li>
+      <li><a href="#security"><i class="fas fa-shield-alt"></i><span>Security</span></a></li>
+      <li><a href="#recommendations"><i class="fas fa-lightbulb"></i><span>Recommendations</span></a></li>
+      <li><a href="#alerts"><i class="fas fa-exclamation-triangle"></i><span>Alerts</span></a></li>
     </ul>
   </aside>
 
   <!-- Main Dashboard Content -->
   <div class="dashboard-wrapper">
     <main>
-      <section id="overview" class="features reveal">
+      <section id="overview" class="features reveal active">
         <h2>Monitoring Overview</h2>
         <div class="card-grid">
           <div class="card"><h3>Total AWS Spend</h3><p>$1,920</p></div>
