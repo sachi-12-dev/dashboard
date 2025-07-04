@@ -1,41 +1,66 @@
-// dashboard.js — Enhanced Interactivity for EWSC Dashboard
+document.addEventListener('DOMContentLoaded', () => {
+  // ===== Sidebar Toggle with Persistence =====
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const collapsed = localStorage.getItem('ews-sidebar-collapsed');
+  if (collapsed === 'true') sidebar.classList.add('collapsed');
 
-document.addEventListener('DOMContentLoaded', function () {
-  // ===== Dark Mode Toggle with Persistence =====
-  const darkToggle = document.getElementById('darkToggle');
-  const currentTheme = localStorage.getItem('ews-theme');
-  if (currentTheme === 'dark') document.body.classList.add('dark');
-
-  darkToggle?.addEventListener('click', () => {
-    const isDark = document.body.classList.toggle('dark');
-    localStorage.setItem('ews-theme', isDark ? 'dark' : 'light');
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+    const isCollapsed = sidebar.classList.contains('collapsed');
+    localStorage.setItem('ews-sidebar-collapsed', isCollapsed);
   });
 
-  // ===== Reveal On Scroll Animation =====
-  function revealOnScroll() {
-    const reveals = document.querySelectorAll('.reveal');
-    const windowHeight = window.innerHeight;
-    reveals.forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if (top < windowHeight * 0.85) {
-        el.classList.add('active');
+  // ===== Reveal Sections On Scroll =====
+  const reveals = document.querySelectorAll('.reveal');
+  const observerOptions = { threshold: 0.15 };
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
       }
     });
-  }
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll();
+  }, observerOptions);
+  reveals.forEach(el => revealObserver.observe(el));
 
-  // ===== Chart.js Setup =====
-  const costChart = document.getElementById('costChart');
-  if (costChart) {
-    new Chart(costChart, {
+  // ===== Smooth Scroll for Sidebar Links =====
+  const navLinks = document.querySelectorAll('.sidebar-nav a[href^="#"]');
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  });
+
+  // ===== Highlight Active Link While Scrolling =====
+  window.addEventListener('scroll', () => {
+    const fromTop = window.scrollY + 100;
+    navLinks.forEach(link => {
+      const section = document.querySelector(link.getAttribute('href'));
+      if (section && section.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  });
+
+  // ===== Chart.js Setup with Animations =====
+  const costChartEl = document.getElementById('costChart');
+  if (costChartEl) {
+    new Chart(costChartEl, {
       type: 'line',
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [{
           label: 'AWS Spend ($)',
           data: [300, 420, 380, 460, 580, 540],
-          borderColor: '#D4AF37',
+          borderColor: 'var(--primary)',
           backgroundColor: 'rgba(212, 175, 55, 0.2)',
           tension: 0.3,
           fill: true,
@@ -43,38 +68,38 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: { display: false },
-        },
+        animation: { duration: 1200, easing: 'easeOutQuart' },
+        plugins: { legend: { display: false } },
+        scales: { x: { grid: { display: false } } },
       },
     });
   }
 
-  const ec2Chart = document.getElementById('ec2Chart');
-  if (ec2Chart) {
-    new Chart(ec2Chart, {
+  const ec2ChartEl = document.getElementById('ec2Chart');
+  if (ec2ChartEl) {
+    new Chart(ec2ChartEl, {
       type: 'bar',
       data: {
         labels: ['us-east-1', 'us-west-2', 'eu-west-1'],
         datasets: [{
           label: 'EC2 Instances',
           data: [12, 9, 6],
-          backgroundColor: '#D4AF37',
+          backgroundColor: 'var(--primary)',
         }],
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: { display: false },
-        },
+        animation: { duration: 1000, easing: 'easeOutBounce' },
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } },
       },
     });
   }
 
-  // ===== Simulated Login Redirect (Optional Future Enhancement) =====
+  // ===== Optional: Simulated Login Redirect =====
   if (window.location.pathname.includes('login.html')) {
     const form = document.querySelector('form');
-    form?.addEventListener('submit', function (e) {
+    form?.addEventListener('submit', (e) => {
       e.preventDefault();
       window.location.href = 'dashboard.html';
     });
