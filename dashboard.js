@@ -4,29 +4,60 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleBtn = document.getElementById('sidebarToggle');
   const collapsed = localStorage.getItem('ews-sidebar-collapsed');
   if (collapsed === 'true') sidebar.classList.add('collapsed');
-
   toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
     const isCollapsed = sidebar.classList.contains('collapsed');
     localStorage.setItem('ews-sidebar-collapsed', isCollapsed);
   });
 
+  // ===== Back to Top Button =====
+  const backToTop = document.createElement('button');
+  backToTop.id = 'backToTop';
+  backToTop.textContent = '↑';
+  Object.assign(backToTop.style, {
+    position: 'fixed',
+    bottom: '1.5rem',
+    right: '1.5rem',
+    width: '3rem',
+    height: '3rem',
+    borderRadius: '50%',
+    border: 'none',
+    backgroundColor: 'var(--primary)',
+    color: 'var(--text-light)',
+    fontSize: '1.5rem',
+    display: 'none',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    zIndex: '1000',
+  });
+  document.body.appendChild(backToTop);
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  window.addEventListener('scroll', () => {
+    backToTop.style.display = window.scrollY > window.innerHeight / 2 ? 'flex' : 'none';
+  });
+
   // ===== Reveal Sections On Scroll =====
   const reveals = document.querySelectorAll('.reveal');
   const observerOptions = { threshold: 0.15 };
-  const revealObserver = new IntersectionObserver((entries) => {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
+        observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
   reveals.forEach(el => revealObserver.observe(el));
 
-  // ===== Smooth Scroll for Sidebar Links =====
+  // ===== Smooth Scroll & Active Link Highlight =====
   const navLinks = document.querySelectorAll('.sidebar-nav a[href^="#"]');
   navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
+    link.addEventListener('click', e => {
       e.preventDefault();
       const target = document.querySelector(link.getAttribute('href'));
       if (target) {
@@ -37,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== Highlight Active Link While Scrolling =====
   window.addEventListener('scroll', () => {
     const fromTop = window.scrollY + 100;
     navLinks.forEach(link => {
@@ -50,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== Chart.js Setup with Animations =====
+  // ===== Chart.js Setup =====
   const costChartEl = document.getElementById('costChart');
   if (costChartEl) {
     new Chart(costChartEl, {
@@ -99,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== Optional: Simulated Login Redirect =====
   if (window.location.pathname.includes('login.html')) {
     const form = document.querySelector('form');
-    form?.addEventListener('submit', (e) => {
+    form?.addEventListener('submit', e => {
       e.preventDefault();
       window.location.href = 'dashboard.html';
     });
