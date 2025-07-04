@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EWSC Dashboard | Elite Web Services</title>
+
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Dashboard-specific Styles -->
+  <link rel="stylesheet" href="dashboard.css" />
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Global Script -->
+  <script defer src="script.js"></script>
+  <!-- Dashboard-specific Script -->
+  <script defer src="dashboard.js"></script>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="logo-container">
+      <a href="index.html">
+        <img src="assets/logo.png" alt="Elite Web Services Logo" class="navbar-logo" />
+      </a>
+      <span class="brand-name">Elite Web Services Control</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html#services">Services</a>
+      <a href="index.html#about">About</a>
+      <a href="case-studies.html">Case Studies</a>
+      <a href="blog.html">Blog</a>
+      <a href="resources.html">Resources</a>
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="index.html#contact">Contact</a>
+      <button id="darkToggle" class="dark-toggle" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </header>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <h2>EWSC Navigation</h2>
+      <ul>
+        <li><a href="#overview" class="active">Overview</a></li>
+        <li><a href="#scorecard">Scorecard</a></li>
+        <li><a href="#spend">AWS Spend</a></li>
+        <li><a href="#ec2">EC2 Insights</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#recommendations">Recommendations</a></li>
+        <li><a href="#alerts">Alerts</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Dashboard Content -->
+    <main>
+      <!-- Monitoring Overview -->
+      <section id="overview" class="features reveal">
+        <h2>Monitoring Overview</h2>
+        <div class="card-grid">
+          <div class="card"><h3>Total AWS Spend</h3><p>$1,920</p></div>
+          <div class="card"><h3>EC2 Instances Running</h3><p>27</p></div>
+          <div class="card"><h3>Open Security Findings</h3><p>6</p></div>
+          <div class="card"><h3>Accounts Monitored</h3><p>12</p></div>
+        </div>
+      </section>
+
+      <!-- Mission-Style Scorecard -->
+      <section id="scorecard" class="features reveal">
+        <h2>EWSC Score</h2>
+        <div class="card-grid">
+          <div class="card"><h3>Overall Score</h3><p>97 (Excellent)</p></div>
+          <div class="card"><h3>Cost Optimization</h3><p>82 ✓</p></div>
+          <div class="card"><h3>Security</h3><p>84 ✓</p></div>
+          <div class="card"><h3>Reliability</h3><p>53 ⚠️</p></div>
+        </div>
+      </section>
+
+      <!-- AWS Spend Chart -->
+      <section id="spend" class="features reveal">
+        <h2>Monthly AWS Spend</h2>
+        <div class="chart-container">
+          <canvas id="costChart"></canvas>
+        </div>
+      </section>
+
+      <!-- EC2 by Region Chart -->
+      <section id="ec2" class="features reveal">
+        <h2>EC2 by Region</h2>
+        <div class="chart-container">
+          <canvas id="ec2Chart"></canvas>
+        </div>
+      </section>
+
+      <!-- Security Findings Breakdown -->
+      <section id="security" class="features reveal">
+        <h2>Security Findings Breakdown</h2>
+        <div class="card-grid">
+          <div class="card"><h3>High Risk</h3><p>3</p></div>
+          <div class="card"><h3>Medium Risk</h3><p>5</p></div>
+          <div class="card"><h3>Low Risk</h3><p>14</p></div>
+        </div>
+      </section>
+
+      <!-- Optimization Recommendations -->
+      <section id="recommendations" class="features reveal">
+        <h2>Optimization Recommendations</h2>
+        <div class="card-grid">
+          <div class="card"><h3>Rightsize EC2</h3><p>i-0abc… underutilized – suggest t3.micro</p></div>
+          <div class="card"><h3>S3 Lifecycle</h3><p>Archive infrequently accessed to Glacier</p></div>
+          <div class="card"><h3>Idle RDS</h3><p>Instance idle 30+ days – consider shutdown</p></div>
+        </div>
+      </section>
+
+      <!-- Latest Alerts & Activities -->
+      <section id="alerts" class="features reveal">
+        <h2>Latest Alerts & Activities</h2>
+        <div class="card-grid">
+          <div class="card"><h3>Unauthorized Access</h3><p>IAM user w/o MFA tried EC2 login</p></div>
+          <div class="card"><h3>Cost Spike Detected</h3><p>Lambda usage ↑240% in 24 hrs</p></div>
+          <div class="card"><h3>S3 Public Bucket</h3><p><code>dev-logs</code> is publicly readable</p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Elite Web Services. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
